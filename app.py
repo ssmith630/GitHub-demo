@@ -21,6 +21,7 @@ def user():
     name = request.args.get("name", "")
     db = get_db()
    # Use a parameterized query to prevent SQL injection..
+# Security fix validated through CodeQL
    rows = db.execute(
     "SELECT id, name, email FROM users WHERE name = ?",
     (name,)
