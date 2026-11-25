@@ -20,8 +20,11 @@ def get_db():
 def user():
     name = request.args.get("name", "")
     db = get_db()
-    # Deliberate flaw: user input is concatenated into the SQL statement (SQL injection).
-    rows = db.execute("SELECT id, name, email FROM users WHERE name = '" + name + "'").fetchall()
+   # Use a parameterized query to prevent SQL injection..
+   rows = db.execute(
+    "SELECT id, name, email FROM users WHERE name = ?",
+    (name,)
+).fetchall()
     return {"users": rows}
 
 
